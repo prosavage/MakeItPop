@@ -180,8 +180,6 @@ const otherTemplate = [
 	}
 ];
 
-
-
 // Open Files Files ============================================================================================================
 function OpenFile()
 {
@@ -206,8 +204,8 @@ function OpenFile()
 		if(filePaths === undefined){ console.log("No file selected"); return; }
 		// Load Files
 		console.log(filePaths);
-		for (var i = 0; i < filePaths.filePaths.length; i++)
-			load_tsv(filePaths.filePaths[i]);
+		//for (var i = 0; i < filePaths.filePaths.length; i++)
+		load_tsv(filePaths.filePaths[0]);
 	});
 }
 

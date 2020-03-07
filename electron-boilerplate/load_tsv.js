@@ -1,6 +1,6 @@
 const csv = require('csv-parser');
 const fs = require('fs');
-const {BrowserWindow} = require('electron');
+//const { ipcRenderer } = require('electron')
 
 module.exports = (filename) => {
     
@@ -13,7 +13,7 @@ module.exports = (filename) => {
         separator: '\t'
     }))
     .on('data', (row) => {
-        console.log(row);
+        //console.log(row);
 
         data = "<tr>";
         for (x in row) {
@@ -21,10 +21,10 @@ module.exports = (filename) => {
         }
         data += "</tr>"
         // Call sql stor
-    })
+    })    
     .on('end', () => {
         console.log('CSV file successfully processed');
-
-        BrowserWindow.document.getElementById("ObjectTable").innerHTML = data;
+        return data;
+        //ipcRenderer.send('asynchronous-message', 'ping')
     });
 }
