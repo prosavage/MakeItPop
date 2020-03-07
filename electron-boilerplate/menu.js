@@ -148,7 +148,7 @@ const otherTemplate = [
 		role: 'fileMenu',
 		submenu: [
 			{
-				label: 'Open File'
+				label: 'Custom'
 			},
 			{
 				type: 'separator'
