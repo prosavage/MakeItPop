@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const {app, Menu, shell} = require('electron');
+const {app, Menu, shell, dialog, BrowserWindow} = require('electron');
 const {
 	is,
 	appMenu,
@@ -104,13 +104,26 @@ const macosTemplate = [
 		role: 'fileMenu',
 		submenu: [
 			{
-				label: 'Open File'
+				label: 'Open File',
+				click() {
+					OpenFile();
+				}
 			},
 			{
 				type: 'separator'
 			},
 			{
-				role: 'close'
+				label: 'Settings',
+				accelerator: 'Control+,',
+				click() {
+					showPreferences();
+				}
+			},
+			{
+				type: 'separator'
+			},
+			{
+				role: 'quit'
 			}
 		]
 	},
@@ -166,6 +179,34 @@ const otherTemplate = [
 		submenu: helpSubmenu
 	}
 ];
+
+
+
+// Open Files Files ============================================================================================================
+function OpenFile()
+{
+	let options = {
+		title : "Open DNA File", 
+
+		defaultPath : __dirname,
+
+		buttonLabel : "Load Files",
+
+		filters :[
+		 {name: 'csv', extensions: ['csv']},
+		 {name: 'tsv', extensions: ['tsv']},
+		 {name: 'All Files', extensions: ['*']}
+		],
+		properties: ['openFile','multiSelections']
+	   }
+	   
+	//Synchronous
+	dialog.showOpenDialog(BrowserWindow, options, (filePaths) => {
+		console.log(filePaths);
+	})
+}
+
+// ===============================================================================================================================
 
 const template = process.platform === 'darwin' ? macosTemplate : otherTemplate;
 
