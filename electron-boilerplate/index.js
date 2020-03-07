@@ -9,8 +9,6 @@ const contextMenu = require('electron-context-menu');
 const config = require('./config');
 const menu = require('./menu');
 
-const load_tsv = require('./load_tsv');
-
 unhandled();
 //debug();
 contextMenu();
@@ -89,5 +87,4 @@ app.on('activate', async () => {
 
 	const favoriteAnimal = config.get('favoriteAnimal');
 	mainWindow.webContents.executeJavaScript(`document.querySelector('header p').textContent = 'Your favorite animal is ${favoriteAnimal}'`);
-	load_tsv('HG001_copynumber_variants.tsv');
 })();

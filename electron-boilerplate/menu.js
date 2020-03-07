@@ -10,7 +10,7 @@ const {
 	debugInfo
 } = require('electron-util');
 const config = require('./config');
-
+const load_tsv = require('./load_tsv');
 const showPreferences = () => {
 	// Show the app's preferences here
 };
@@ -186,9 +186,9 @@ const otherTemplate = [
 function OpenFile()
 {
 	let options = {
-		title : "Open DNA File", 
+		title : "Open CSV File", 
 
-		defaultPath : __dirname,
+		//defaultPath : path.join(__dirname),
 
 		buttonLabel : "Load Files",
 
@@ -199,11 +199,16 @@ function OpenFile()
 		],
 		properties: ['openFile','multiSelections']
 	   }
-	   
-	//Synchronous
-	dialog.showOpenDialog(BrowserWindow, options, (filePaths) => {
+
+	dialog.showOpenDialog((BrowserWindow, options, filePaths) => {
+	}).then((filePaths) => {
+		// If no files were selected
+		if(filePaths === undefined){ console.log("No file selected"); return; }
+		// Load Files
 		console.log(filePaths);
-	})
+		for (var i = 0; i < filePaths.filePaths.length; i++)
+			load_tsv(filePaths.filePaths[i]);
+	});
 }
 
 // ===============================================================================================================================
