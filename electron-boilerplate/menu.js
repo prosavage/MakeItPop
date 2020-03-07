@@ -104,7 +104,7 @@ const macosTemplate = [
 		role: 'fileMenu',
 		submenu: [
 			{
-				label: 'Custom'
+				label: 'Open File'
 			},
 			{
 				type: 'separator'
@@ -135,7 +135,7 @@ const otherTemplate = [
 		role: 'fileMenu',
 		submenu: [
 			{
-				label: 'Custom'
+				label: 'Open File'
 			},
 			{
 				type: 'separator'
