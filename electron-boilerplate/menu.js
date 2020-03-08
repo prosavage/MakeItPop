@@ -148,7 +148,10 @@ const otherTemplate = [
 		role: 'fileMenu',
 		submenu: [
 			{
-				label: 'Custom'
+				label: 'Open File',
+				click() {
+					OpenFile();
+				}
 			},
 			{
 				type: 'separator'
@@ -203,7 +206,6 @@ function OpenFile()
 		// If no files were selected
 		if(filePaths === undefined){ console.log("No file selected"); return; }
 		// Load Files
-		console.log(filePaths);
 		//for (var i = 0; i < filePaths.filePaths.length; i++)
 		load_tsv(filePaths.filePaths[0]);
 	});

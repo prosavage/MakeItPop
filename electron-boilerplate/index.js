@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const {app, BrowserWindow, Menu, ipcMain} = require('electron');
+const {app, BrowserWindow, Menu} = require('electron');
 const {is} = require('electron-util');
 const unhandled = require('electron-unhandled');
 const debug = require('electron-debug');
@@ -37,7 +37,10 @@ const createMainWindow = async () => {
 		title: app.name,
 		show: false,
 		width: 600,
-		height: 400
+		height: 400,
+		webPreferences: {
+			nodeIntegration: true,
+		}
 	});
 
 	win.on('ready-to-show', () => {
@@ -82,13 +85,12 @@ app.on('activate', async () => {
 	}
 });
 
+module.exports.UpdateData = (data) => {
+	mainWindow.webContents.executeJavaScript(`document.getElementById("ObjectTable").innerHTML = '` + data + "'");
+}
+
 (async () => {
 	await app.whenReady();
 	Menu.setApplicationMenu(menu);
-	mainWindow = await createMainWindow();
-
-	const favoriteAnimal = config.get('favoriteAnimal');
-	mainWindow.webContents.executeJavaScript(`document.querySelector('header p').textContent = 'Your favorite animal is ${favoriteAnimal}'`);
-	const data = "Bruh how you do this?";//load_tsv('HG001_copynumber_variants.tsv');
-	mainWindow.webContents.executeJavaScript(`document.getElementById("ObjectTable").innerHTML = ` + data);
+	mainWindow = await createMainWindow();	
 })();

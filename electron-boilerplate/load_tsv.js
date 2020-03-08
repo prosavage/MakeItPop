@@ -1,30 +1,32 @@
 const csv = require('csv-parser');
 const fs = require('fs');
-//const { ipcRenderer } = require('electron')
-
+var index = require('./index.js');
 module.exports = (filename) => {
     
-    var data = "";
+    var data = "<tr>";
+    let header = ['CHROMOSOME_NAME', 'START_POSITION', 'END_POSITION', 'REFERENCE', 'ALTERNATE', 'REFERENCE_READS', 'ALTERNATE_READS'];
 
-    let names = ['CHROMOSOME_NAME', 'START_POSITION', 'END_POSITION', 'REFERENCE', 'ALTERNATE', 'REFERENCE_READS', 'ALTERNATE_READS'];
+    for (x in header) {
+        data += "<th>" + header[x] + "</th>";
+    }    
+    data += "</tr>"
+
     fs.createReadStream(filename)
     .pipe(csv ({
-        headers: names,
+        headers: header,
         separator: '\t'
     }))
     .on('data', (row) => {
         //console.log(row);
+        data += "<tr>";
 
-        data = "<tr>";
         for (x in row) {
-          data += "<th>" + row[x].value + "</th>";
+          data += "<th>" + row[x] + "</th>";
         }
         data += "</tr>"
-        // Call sql stor
     })    
     .on('end', () => {
         console.log('CSV file successfully processed');
-        return data;
-        //ipcRenderer.send('asynchronous-message', 'ping')
+        index.UpdateData(data);
     });
 }
