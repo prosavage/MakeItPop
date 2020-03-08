@@ -4,10 +4,10 @@ const fs = require('fs');
 module.exports = (filename) => {
     fs.createReadStream(filename)
 
-    .pipe(csv())
+    .pipe(csv({ separator: '\t' }))
     .on('data', (row) => {
         console.log(row);
-        // Call sql store
+        // Call sql stor
     })
     .on('end', () => {
         console.log('CSV file successfully processed');
